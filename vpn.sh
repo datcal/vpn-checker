@@ -1,0 +1,125 @@
+#!/bin/bash
+
+# List of VPN company websites
+vpn_websites=(
+    "expressvpn.com"
+    "nordvpn.com"
+    "cyberghostvpn.com"
+    "surfshark.com"
+    "privateinternetaccess.com"
+    "hotspotshield.com"
+    "vpn.ac"
+    "ipvanish.com"
+    "strongvpn.com"
+    "protonvpn.com"
+    "hide.me"
+    "tunnelbear.com"
+    "windscribe.com"
+    "vyprvpn.com"
+    "zenmate.com"
+    "purevpn.com"
+    "safervpn.com"
+    "fastestvpn.com"
+    "hsselite.com"
+    "perfect-privacy.com"
+    "mullvad.net"
+    "vpnunlimitedapp.com"
+    "torvpn.com"
+    "avast.com/secureline-vpn"
+    "avg.com/en-us/secure-vpn"
+    "bitdefender.com/solutions/vpn.html"
+    "bullguard.com/vpn.aspx"
+    "ivacy.com"
+    "privatevpn.com"
+    "vpnunlimitedapp.com"
+    "kaspersky.com/vpn-secure-connection"
+    "f-secure.com/en/home/products/freedome"
+    "norton.com/internetsecurity-vpn"
+    "mcafee.com/en-us/vpn.html"
+    "totalav.com/vpn"
+    "ghostpath.com"
+    "vpn.ht"
+    "seed4.me"
+    "vpnmaster.com"
+    "safervpn.com"
+    "zoogvpn.com"
+    "acevpn.com"
+    "vpnsecure.me"
+    "blackvpn.com"
+    "proxy.sh"
+    "cactusvpn.com"
+    "ra4wvpn.com"
+    "vpninja.net"
+    "vpn.asia"
+    "slickvpn.com"
+    "smartvpn.biz"
+    "frootvpn.com"
+    "overplay.net"
+    "octanevpn.com"
+    "torguard.net"
+    "airvpn.org"
+    "azirevpn.com"
+    "vpn.ac"
+    "unblockvpn.com"
+    "getflix.com.au"
+    "cryptofree.io"
+    "anonine.com"
+    "hideipvpn.com"
+    "myvpn.com"
+    "in-need-of-vpn.com"
+    "personalvpn.com"
+    "vpnreactor.com"
+    "unlocator.com"
+    "opera.com/vpn"
+    "psiphon.ca"
+    "hola.org"
+    "betternet.co"
+    "urban-vpn.com"
+    "vpnunlimitedapp.com"
+    "speedify.com"
+    "cloudflarewarp.com"
+    "vpnarea.com"
+    "ibvpn.com"
+    "hideallip.com"
+    "privacyhero.com"
+    "vpnunlimitedapp.com"
+    "vpnpro.net"
+    "switchvpn.net"
+    "vpnaccounts.com"
+    "vpnbook.com"
+    "usaip.eu"
+    "ironsocket.com"
+    "anonymizer.com"
+    "insorg.org"
+    "anonymize.net"
+    "vpnauthority.com"
+    "cryptostorm.is"
+    "privatetunnel.com"
+    "shadeyouvpn.com"
+    "smartdnsproxy.com"
+    "savethevpn.com"
+    "owndns.xyz"
+)
+
+# File to save the results
+output_file="vpn_ping_results.csv"
+
+# Function to ping websites and collect results
+ping_websites() {
+    > $output_file
+    echo "Website,Response Time (ms)" > $output_file
+    total=${#vpn_websites[@]}
+    for i in "${!vpn_websites[@]}"; do
+        website=${vpn_websites[$i]}
+        echo "Pinging ($((i+1))/$total): $website"
+        response_time=$(ping -c 1 $website | grep 'time=' | awk -F'time=' '{ print $2 }' | awk '{ print $1 }')
+        if [ -z "$response_time" ]; then
+            response_time="Timeout"
+        fi
+        echo "$website,$response_time" >> $output_file
+    done
+}
+
+# Main script
+ping_websites
+echo "Results saved to $output_file"
